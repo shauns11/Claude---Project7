@@ -30,7 +30,7 @@ library(haven)
 
 # Open log file
 dir.create("output", showWarnings = FALSE)
-sink(file.path("output", "add_two_numbers.txt"), split = TRUE)
+sink(file.path("output", "add_two_numbers.log"), split = TRUE)
 
 # Commands
 # ... analysis code ...
@@ -114,7 +114,7 @@ git push                   # upload to GitHub
 
 ### What is tracked
 
-- Tracked: `code\` (R scripts), `output\` (logs, tables, figures), `CLAUDE.md`, `.gitignore`
+- Tracked: `code\` (R scripts), `output\` (logs, tables, figures), `CLAUDE.md`, `.gitignore`, `.claude\settings.json`
 - Ignored (see `.gitignore`):
   - `/*.log` — root-level logs created by batch mode
   - `*.dta` — Stata datasets, anywhere in the project
@@ -133,17 +133,13 @@ git push                   # upload to GitHub
 
 1. Verified `code\`, `output\`, and `data\` folders exist under the working directory.
 2. Created `.claude\settings.json` with permission rules for file writes/edits in `code\`, `output\`, `data\` and for running `Rscript.exe`.
-3. Created `code\add_two_numbers.r` containing:
-   ```r
-   library(haven)
-   print(2+2)
+3. Created `code\add_two_numbers.r` from the template above. The script writes its own log via `sink(file.path("output", "add_two_numbers.log"), split = TRUE)`, so no output redirection is needed.
+4. Ran the script from the command line (from the working directory) since there is no interactive RStudio session available to this agent:
    ```
-4. Ran the script from the command line since there is no interactive RStudio session available to this agent:
+   Rscript.exe code\add_two_numbers.r
    ```
-   Rscript.exe code\add_two_numbers.r *> output\add_two_numbers.log
-   ```
-   (Redirecting all output to a `.log` file in `output\` satisfies the "verify the `.log` file exists" requirement, since running interactively in RStudio does not itself produce a log file.)
-5. Verified `output\add_two_numbers.log` exists and contains `[1] 4`, confirming the script ran successfully.
+5. Verified `output\add_two_numbers.log` exists and contains `[1] 4`, session info and a timestamp, confirming the script ran successfully.
+6. Created `.gitignore`, initialised the repo, committed, and pushed `main` to the GitHub remote.
 
 Note: On this machine, `Rscript.exe` from R-4.6.1 returns a non-zero/crash exit code on shutdown (likely a DLL conflict with another R version, 4.5.3, also installed on PATH), even though the script itself completes and produces correct output. This does not affect the log file contents, but worth investigating if scripts need to be chained on their exit code in the future.
 
