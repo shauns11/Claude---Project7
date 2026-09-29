@@ -6,3 +6,6 @@
 
 # R datasets (anywhere in the project)
 *.rds
+
+# Claude Code local settings
+.claude/settings.json

@@ -70,6 +70,9 @@ Remote: `https://github.com/shauns11/Claude---Project7.git` (branch `main`). The
 
 # R datasets (anywhere in the project)
 *.rds
+
+# Claude Code local settings
+.claude/settings.json
 ```
 
 2. Initialise the repository, check what will and won't be committed, then commit:
@@ -114,11 +117,12 @@ git push                   # upload to GitHub
 
 ### What is tracked
 
-- Tracked: `code\` (R scripts), `output\` (logs, tables, figures), `CLAUDE.md`, `.gitignore`, `.claude\settings.json`
+- Tracked: `code\` (R scripts), `output\` (logs, tables, figures), `CLAUDE.md`, `.gitignore`
 - Ignored (see `.gitignore`):
   - `/*.log` — root-level logs created by batch mode
   - `*.dta` — Stata datasets, anywhere in the project
-   - `*.rds` — R datasets, anywhere in the project
+  - `*.rds` — R datasets, anywhere in the project
+  - `.claude/settings.json` — Claude Code local permission settings (kept on disk, not uploaded)
 
 ## Enable CLAUDE to create / edit files in R
 
